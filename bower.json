@@ -1,0 +1,25 @@
+{
+  "name": "oauth-validator-php",
+  "version": "1.0.0-dev",
+  "homepage": "http://www.jublo.net/projects/oauth-validator/php",
+  "authors": [
+    "Joshua Atkins <joshua.atkins@jublo.net>",
+    "J.M. <jm@jublo.net>"
+  ],
+  "description": "A library for validating OAuth signatures in PHP.",
+  "main": "oauth-validator.php",
+  "moduleType": [],
+  "keywords": [
+    "OAuth",
+    "API",
+    "signing"
+  ],
+  "license": "GPL-3.0+",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

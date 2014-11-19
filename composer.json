@@ -1,0 +1,37 @@
+{
+  "name": "jublonet/oauth-validator-php",
+  "description" : "A library for validating OAuth signatures in PHP.",
+  "keywords": [
+    "OAuth",
+    "API",
+    "signing"
+  ],
+  "homepage": "http://www.jublo.net/projects/oauth-validator/php",
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "Joshua Atkins",
+      "email": "joshua.atkins@jublo.net",
+      "homepage": "http://atkins.im/",
+      "role": "Developer"
+    },
+    {
+      "name": "J.M.",
+      "email": "jm@jublo.net",
+      "homepage": "http://mynetx.net/",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "email": "support@jublo.net",
+    "issues": "https://github.com/jublonet/oauth-validator-php/issues",
+    "source": "https://github.com/jublonet/oauth-validator-php/releases"
+  },
+  "require": {
+    "ext-hash": "*",
+    "composer/installers": "~1.0"
+  },
+  "autoload": {
+    "classmap": ["./"]
+  }
+}
