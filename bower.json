@@ -1,6 +1,6 @@
 {
   "name": "oauth-validator-php",
-  "version": "1.0.0-dev",
+  "version": "1.0.0",
   "homepage": "http://www.jublo.net/projects/oauth-validator/php",
   "authors": [
     "Joshua Atkins <joshua.atkins@jublo.net>",
