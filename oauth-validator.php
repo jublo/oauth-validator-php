@@ -6,7 +6,7 @@ namespace Jublo;
  * A library for validating OAuth signatures in PHP.
  *
  * @package   oauth-validator
- * @version   1.0.0-dev
+ * @version   1.0.0
  * @author    Jublo Solutions <support@jublo.net>
  * @copyright 2014 Jublo Solutions <support@jublo.net>
  * @license   http://opensource.org/licenses/GPL-3.0 GNU General Public License 3.0
@@ -49,7 +49,7 @@ class Oauth_Validator
   /**
    * The current OAuth Validator version
    */
-  protected $_version = '1.0.0-dev';
+  protected $_version = '1.0.0';
 
   /**
    * Returns singleton class instance
