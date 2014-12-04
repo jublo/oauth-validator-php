@@ -1,5 +1,8 @@
 oauth-validator - changelog
 ===========================
 
+1.0.1 (2014-12-04)
+- bug: oauth_token was required, but is not always required in the flow
+
 1.0.0 (2014-11-19)
 Initial version
