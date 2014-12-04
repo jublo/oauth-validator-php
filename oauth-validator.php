@@ -274,7 +274,7 @@ class Oauth_Validator
   {
     static $required_params = array(
       'consumer_key', 'nonce', 'signature', 'signature_method',
-      'timestamp', 'token', 'version'
+      'timestamp', 'version'
     );
 
     $keys = array_keys($authorization_params);
