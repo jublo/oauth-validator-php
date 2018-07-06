@@ -294,6 +294,7 @@ class Oauth_Validator
       trigger_error('OAuth signature method must be HMAC-SHA1.');
       return false;
     }
+
     $time_difference = abs(time() - $authorization_params['timestamp']);
     if ($time_difference > 180) {
       trigger_error(
@@ -390,8 +391,39 @@ class Oauth_Validator
    */
   protected function _sign($httpmethod, $method, $params, $timestamp, $nonce)
   {
+    $signBaseParams = $this->getSignBaseParams($params, $timestamp, $nonce);
+    $signBaseString = $this->getSignBaseString($params, $signBaseParams);
+    $signature = $this->getSignature($httpmethod, $method);
+    $params = $signBaseParams;
+    $params['oauth_signature'] = $signature;
+    $keys = $params;
+    ksort($keys);
+    $authorization = 'OAuth ';
+    foreach ($keys as $key => $value) {
+      $authorization .= $key . "=\"" . $this->_url($value) . "\", ";
+    }
+    return substr($authorization, 0, -2);
+  }
+
+  public function getSignature($httpmethod, $method, $timestamp = null, $nonce = null, $params = []) {
     if (self::$_oauth_consumer_key === null) {
       throw new \Exception('To generate a signature, the consumer key must be set.');
+    }
+    if(isset($this->signBaseString)) {
+      return $this->_sha1($httpmethod . '&' . $this->_url($method) . '&' . $this->_url($this->signBaseString));
+    }
+    if(!($timestamp && $nonce)) {
+      throw new \Exception('To generate a signature, you must provide a timestamp and nonce.');
+    }
+    $signBaseParams = $this->getSignBaseParams($params, $timestamp, $nonce);
+    $signBaseString = $this->getSignBaseString($params, $signBaseParams);
+    $sha = $this->_sha1($httpmethod . '&' . $this->_url($method) . '&' . $this->_url($signBaseString));
+    return $this->_url($sha);
+  }
+
+  private function getSignBaseParams($params, $timestamp, $nonce) {
+    if(isset($this->signBaseParams)) {
+      return $this->signBaseParams;
     }
     $sign_params    = array(
       'consumer_key'     => self::$_oauth_consumer_key,
@@ -407,7 +439,13 @@ class Oauth_Validator
     if ($this->_oauth_token != null) {
       $sign_base_params['oauth_token'] = $this->_url($this->_oauth_token);
     }
-    $oauth_params = $sign_base_params;
+    return $sign_base_params;
+  }
+
+  private function getSignBaseString($params, $sign_base_params) {
+    if(isset($this->signBaseString)) {
+      return $this->signBaseString;
+    }
     foreach ($params as $key => $value) {
       $sign_base_params[$key] = $this->_url($value);
     }
@@ -416,17 +454,7 @@ class Oauth_Validator
     foreach ($sign_base_params as $key => $value) {
       $sign_base_string .= $key . '=' . $value . '&';
     }
-    $sign_base_string = substr($sign_base_string, 0, -1);
-    $signature        = $this->_sha1($httpmethod . '&' . $this->_url($method) . '&' . $this->_url($sign_base_string));
-
-    $params = $oauth_params;
-    $params['oauth_signature'] = $signature;
-    $keys = $params;
-    ksort($keys);
-    $authorization = 'OAuth ';
-    foreach ($keys as $key => $value) {
-      $authorization .= $key . "=\"" . $this->_url($value) . "\", ";
-    }
-    return substr($authorization, 0, -2);
+    $this->signBaseString = substr($sign_base_string, 0, -1);
+    return $this->signBaseString;
   }
 }
